@@ -1,0 +1,15 @@
+services:
+  api:
+    image: server:v2
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - USER=root
+    volumes:
+      -  /opt/server-api/backups:/opt/server-api/backups
+      -  /opt/server-api:/opt/server-api
+      -  /var/lib/gladysassistant:/var/lib/gladysassistant
+    restart: unless-stopped
+#    depends_on:
+#      - db

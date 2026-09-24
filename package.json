@@ -1,0 +1,19 @@
+{
+  "name": "server-api",
+  "version": "1.0.0",
+  "description": "node js imageserver-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@fastify/static": "^10.1.4",
+    "child_process": "^1.0.2",
+    "fastify": "^5.12.5",
+    "path": "^0.12.7"
+  }
+}
