@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "gladys-server-api",
+  "name": "server api",
   "description": {
     "en": "Control my devices from Gladys Assistant.",
     "fr": "Contrôlez mes appareils depuis Gladys Assistant."
@@ -14,11 +14,11 @@
   "transports": ["local", "cloud"],
   "config_schema": [
     {
-      "key": "api_key",
-      "type": "secret",
-      "label": { "en": "API key", "fr": "Clé d'API" },
-      "placeholder": { "en": "sk-1234...", "fr": "sk-1234..." },
-      "required": true
+      "key": "local_port",
+      "type": "number",
+      "label": {
+        "en": "Local API port",
+        "fr": "Port de l'API locale"
     }
   ]
 }
