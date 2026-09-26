@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "server-api",
+  "name": "gladys-server-api",
   "description": {
     "en": "Control my devices from Gladys Assistant.",
     "fr": "Contrôlez mes appareils depuis Gladys Assistant."
