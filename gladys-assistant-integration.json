@@ -61,7 +61,8 @@
       },
       "timeout_seconds": 30
     }
-  ],
+  ]
+    },
    "widgets": [
     {
       "key": "backup DB",
