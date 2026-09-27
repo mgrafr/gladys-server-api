@@ -1,0 +1,5 @@
+[Sun Sep 27 06:50:51 UTC 2026] Starting Docker backup
+[Sun Sep 27 06:50:51 UTC 2026] Exporting datas: /var/lib/gladysassistant
+tar: Removing leading `/' from member names
+[Sun Sep 27 06:50:54 UTC 2026] Compressing backup
+[Sun Sep 27 06:50:54 UTC 2026] Backup completed. Size: 6.9M
