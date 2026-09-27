@@ -12,8 +12,6 @@ const fs = require('fs');
 const nomFichier = 'index.html';
 const nom_tar = "datas.tar.gz";
 
-const contenuHtml = "<!DOCTYPE html><html lang='fr'><head><meta charset='UTF-8'><title>Ma page</title></head><body><h1>Bonjour depuis Node.js </h1></body></html>";
-
 // Enregistrement du plugin avec le dossier contenant vos fichiers publics
 //fastify.register(fastifyStatic, {
 //  root: '/opt/server-api/backups',
@@ -48,12 +46,14 @@ fastify.get('/backup', async (request, reply) => {
 //  reply.type('application/gzip');
 
   // Envoyer le fichier (le chemin est relatif au dossier 'root' défini plus haut)
+// const htmlPath = path.resolve('/opt/gladys-server-api/backups/index.html');
+//const stream = fs.createReadStream(htmlPath);
   return reply
       .code(200) // HTTP status code
-      .header('Content-Type', 'text/html; charset=utf-8') // Set HTML content type
-      .send(contenuHtml);
-});
+      .header('Content-Type', 'application/json; charset=utf-8')
+      .send({ lien : "http://192.168.1.5:3002/opt/gladys-server-api/backups/datas.tar.gz" });
   });
+});
   } catch (err) {
     fastify.log.error(err);
     return reply.code(500).send({ error: 'Unexpected server error' });
