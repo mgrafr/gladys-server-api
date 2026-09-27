@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BACKUP_DIR="/opt/server-api/backups"
+BACKUP_DIR="/opt/gladys-server-api/backups"
 BACKUP_DATAS_GLADYS="/var/lib/gladysassistant"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOG_FILE="$BACKUP_DIR/backup.log"
@@ -28,4 +28,4 @@ echo "[$(date)] Backup completed. Size: $SIZE" >> "$LOG_FILE"
 find "$BACKUP_DIR" -maxdepth 1 -name "*.tar.gz" -type f -mtime +5 -delete
 
 # Verify backup
-ls -lh /opt/server-api/backups/
+ls -lh "$BACKUP_DIR"/
