@@ -73,6 +73,7 @@
         "en": "HTTP link to retrieve the database backup from a browser.",
         "fr": "lien http pour récupérer la sauvegarde des Bases de données depuis un navigateur."
       },
-      "icon": "hard-drive",
+      "icon": "hard-drive"
+    }
    ]
       ]
