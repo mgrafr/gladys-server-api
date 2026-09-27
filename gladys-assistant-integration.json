@@ -3,23 +3,76 @@
   "type": "device",
   "name": "server api",
   "description": {
-    "en": "Control my devices from Gladys Assistant.",
-    "fr": "Contrôlez mes appareils depuis Gladys Assistant."
+    "en": "Link Gladys with a nodejs server: works with HTTP API...",
+    "fr": "Reliez Gladys à un serveur nodejs :fonctionne avec http api ..."
   },
   "version": "1.0.0",
   "docker_image": "ghcr.io/mgrafr/gladys-server-api:latest",
   "gladys_version": ">=4.86.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.jpg",
-  "categories": ["lighting", "energy"],
-  "transports": ["local", "cloud"],
+  "categories": ["services", "network"],
   "config_schema": [
-    {
-      "key": "local_port",
-      "type": "number",
+   {
+      "key": "intro",
+      "type": "section",
       "label": {
-        "en": "Local API port",
-        "fr": "Port de l'API locale"
+        "en": "Server api connection" ,
+        "fr": "Connexion au serveur api"
+      },
+   "description": {
+        "en": "Works from Gladys with the 'make an HTTP request' action. The URL is the server root, e.g., http://localhost:3002 or http://192.168.1.10:3002.,
+        "fr": "Fonctionne depuis Gladys avec l'action 'faire une requète HTTP'. L'URL est la racine du serveur, ex. http://localhost :3002 ou http://192.168.1.10:3002."
+      }, 
+      {
+      "key": "server_url",
+      "type": "string",
+      "label": {
+        "en": "Server URL",
+        "fr": "URL du serveur"
+      },
+      "description": {
+        "en": "For example: http://localhost;3002/backup",
+        "fr": "Par exemple : http://localhost:3002/backup"
+      },
+     "required": true
+    },
+     {
+      "key": "username",
+      "type": "string",
+      "label": {
+        "en": "Username",
+        "fr": "Utilisateur"
+      },
+      "required": true
+    },
+    {
+      "key": "password",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe"
+      },
+     "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test connection",
+        "fr": "Tester la connexion"
+      },
+      "timeout_seconds": 30
     }
-    }    
-  ]
-}
+  ],
+   "widgets": [
+    {
+      "key": "backup DB",
+      "label": {
+        "en": "database backup link",
+        "fr": "lien de sauvegarde bases de données"
+      },
+      "description": {
+        "en": "HTTP link to retrieve the database backup from a browser.",
+        "fr": "lien http pour récupérer la sauvegarde des Bases de données depuis un navigateur."
+      },
+      "icon": "hard-drive",
+   ],
+      ]
