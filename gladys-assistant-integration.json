@@ -51,7 +51,8 @@
       "label": {
         "en": "Password",
         "fr": "Mot de passe"
-      },
+      }
+    },
      "actions": [
     {
       "key": "test_connection",
