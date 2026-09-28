@@ -7,7 +7,7 @@
     "fr": "Reliez Gladys à un serveur nodejs :fonctionne avec http api ..."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/mgrafr/gladys-server-api:latest",
+  "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.0",
   "gladys_version": ">=4.86.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.jpg",
   "categories": ["services", "network"],
