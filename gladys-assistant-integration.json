@@ -8,7 +8,7 @@
   },
   "version": "1.0.0",
   "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.0",
-  "gladys_version": ">=4.86.0",
+  "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.jpg",
   "categories": ["services", "network"],
   "transports": ["local"],
