@@ -11,6 +11,7 @@
   "gladys_version": ">=4.86.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.jpg",
   "categories": ["services", "network"],
+  "transports": ["local"],
   "config_schema": [
    {
       "key": "intro",
@@ -52,7 +53,8 @@
         "en": "Password",
         "fr": "Mot de passe"
       }
-    },
+    }
+  ],
      "actions": [
     {
       "key": "test_connection",
@@ -62,8 +64,7 @@
       },
       "timeout_seconds": 30
     }
-  ]
-    },
+  ],
    "widgets": [
     {
       "key": "backup DB",
