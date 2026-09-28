@@ -68,10 +68,10 @@
   ],
    "widgets": [
     {
-      "key": "backup DB",
+      "key": "backup-DB",
       "label": {
         "en": "database backup link",
-        "fr": "lien de sauvegarde bases de données"
+        "fr": "lien de sauvegarde database"
       },
       "description": {
         "en": "HTTP link to retrieve the database backup from a browser.",
