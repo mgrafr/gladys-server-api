@@ -68,7 +68,7 @@
   ],
    "widgets": [
     {
-      "key": "backup_DB",
+      "key": "ln_backup_db",
       "label": {
         "en": "database backup link",
         "fr": "lien de sauvegarde database"
