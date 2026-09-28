@@ -23,8 +23,9 @@
    "description": {
         "en": "Works from Gladys with the 'make an HTTP request' action. The URL is the server root, e.g., http://localhost:3002 or http://192.168.1.10:3002.",
         "fr": "Fonctionne depuis Gladys avec l'action 'faire une requète HTTP'. L'URL est la racine du serveur, ex. http://localhost :3002 ou http://192.168.1.10:3002."
-      }, 
-      {
+      }
+   }, 
+   {
       "key": "server_url",
       "type": "string",
       "label": {
@@ -79,5 +80,4 @@
       "icon": "hard-drive"
     }
    ]
-      
 }
