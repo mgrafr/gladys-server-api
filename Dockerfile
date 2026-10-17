@@ -9,12 +9,11 @@
 # -----------------------------------------------------------------------------
 
 FROM node:24-alpine
-
+LABEL org.opencontainers.image.source https://github.com/mgrafr/gladys-server-api
 # dumb-init: handles signals (SIGTERM) correctly for a graceful shutdown.
 RUN apk add --no-cache dumb-init
 
 WORKDIR /app
-LABEL org.opencontainers.image.source https://github.com/mgrafr/gladys-server-api
 # Install the PROD dependencies first (better build cache).
 COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev || npm install --omit=dev
