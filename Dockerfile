@@ -7,7 +7,7 @@
 #   - runs as a non-root user
 #   - multi-arch image (linux/amd64 + linux/arm64), see the CI workflow
 # -----------------------------------------------------------------------------
-
+LABEL org.opencontainers.image.source https://github.com/mgrafr/gladys-server-api
 FROM node:24-alpine
 
 # dumb-init: handles signals (SIGTERM) correctly for a graceful shutdown.
