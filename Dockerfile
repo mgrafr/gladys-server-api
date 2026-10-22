@@ -1,38 +1,43 @@
-# -----------------------------------------------------------------------------
-# Integration image.
-#
-# Gladys sandbox constraints ("the sandbox is the defense"):
-#   - rootfs mounted READ-ONLY -> never write outside /data
-#   - a single writable volume: /data
-#   - runs as a non-root user
-#   - multi-arch image (linux/amd64 + linux/arm64), see the CI workflow
-# -----------------------------------------------------------------------------
-
 FROM node:24-alpine
-LABEL org.opencontainers.image.source https://github.com/mgrafr/gladys-server-api
-# dumb-init: handles signals (SIGTERM) correctly for a graceful shutdown.
-RUN apk add --no-cache dumb-init
 
+USER root
+
+# Create a directory for application data
+RUN mkdir -p /app/backups
+
+
+RUN chmod -R 777 /app/backups
+
+
+RUN apk update && apk add bash  --no-cache bash
+# Créer un utilisateur non-root pour exécuter Node.js
+
+
+RUN addgroup -g 1001 nodegroup \
+    && adduser -D -u 1001 -G nodegroup nodeuser
+    
+# Créer le dossier de l'application et donner les droits
 WORKDIR /app
-# Install the PROD dependencies first (better build cache).
-COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev || npm install --omit=dev
+RUN chown -R nodeuser:nodegroup /app
 
-# Then the integration code.
-COPY index.js ./
-COPY src ./src
-COPY gladys-assistant-integration.json ./
+# Copier les fichiers du projet
+COPY --chown=nodeuser:nodegroup package*.json ./
 
-# The only writable location allowed at runtime. Docker creates a new volume
-# with the owner of the image's /data, so it must belong to `node`, and before
-# VOLUME: changes made to /data after it are discarded. Without this, /data is
-# root-owned and the integration cannot write to it.
-ENV NODE_ENV=production
-RUN mkdir -p /data && chown node:node /data
-VOLUME ["/data"]
+# Installer les dépendances
+USER nodeuser
 
-# Run as an unprivileged user (already present in the node image).
-USER node
+RUN npm install --only=production
 
-ENTRYPOINT ["dumb-init", "--"]
+# Copier le reste du code
+COPY --chown=nodeuser:nodegroup . .
+
+# COPY src/save.sh /opt/server-api/src/save.sh
+RUN chmod +x /app/src/save.sh
+
+
+# Exposer le port de l'application
+EXPOSE 3004
+
+
+# Commande de démarrage
 CMD ["node", "index.js"]
