@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Gladys Assistant external integration: databases backup through the server-api (Fastify) container.",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
