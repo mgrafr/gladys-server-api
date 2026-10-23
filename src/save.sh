@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BACKUP_DIR="/opt/server-api/backups"
-BACKUP_DATAS_GLADYS="/var/lib/gladysassistant"
+BACKUP_DATAS_GLADYS="/opt/server-api/gl"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOG_FILE="$BACKUP_DIR/backup.log"
 #chmod -R 775 "$BACKUP_DIR"
@@ -25,7 +25,7 @@ SIZE=$(du -sh "${TIMESTAMP}.tar.gz" | cut -f1)
 echo "[$(date)] Backup completed. Size: $SIZE" >> "$LOG_FILE"
 
 # Keep only last 5 backups
-find "$BACKUP_DIR" -maxdepth 1 -name "*.tar.gz" -type f -mtime +5 -delete
+# find "$BACKUP_DIR" -maxdepth 1 -name "*.tar.gz" -type f -mtime +5 -delete
 
 # Verify backup
 ls -lh /opt/server-api/backups/
