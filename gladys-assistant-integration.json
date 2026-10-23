@@ -54,7 +54,7 @@
         "en": "Optional: a server-api you run yourself (docker compose), with the Gladys data folder mounted. Empty = the container started by the integration.",
         "fr": "Optionnel : un server-api que vous lancez vous-même (docker compose), avec le dossier de données de Gladys monté. Vide = le conteneur démarré par l'intégration."
       },
-      "placeholder": { "en": "e.g. http://192.168.1.15:3004", "fr": "ex. http://192.168.1.15:3004" },
+      "placeholder": { "en": "e.g. http://192.168.1.131:3004", "fr": "ex. http://192.168.1.131:3004" },
       "required": false
     },
     {
@@ -65,7 +65,7 @@
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
         "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
       },
-      "placeholder": { "en": "e.g. 192.168.1.15", "fr": "ex. 192.168.1.15" },
+      "placeholder": { "en": "e.g. 192.168.1.131", "fr": "ex. 192.168.1.131" },
       "required": false
     },
     {
