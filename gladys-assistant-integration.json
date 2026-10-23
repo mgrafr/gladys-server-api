@@ -63,7 +63,7 @@
       "label": { "en": "Gladys IP address", "fr": "Adresse IP de Gladys" },
       "description": {
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
-        "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
+        "fr": "Adresse utilisée {{gladys_host}}:{{port:server_api}}/download-stream : elle sert au lien de téléchargement affiché dans le widget."
       },
       "placeholder": { "en": "e.g. 192.168.1.131", "fr": "ex. 192.168.1.131" },
       "required": false
