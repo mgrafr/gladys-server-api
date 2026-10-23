@@ -12,9 +12,21 @@
 
 // Defaults: they MUST stay consistent with the `default` values declared in the
 // `config_schema` of the manifest.
+var ips = os.networkInterfaces();
+Object
+  .keys(ips)
+  .forEach(function(_interface) {
+     ips[_interface]
+      .forEach(function(_dev) {
+        if (_dev.family === 'IPv4' && !_dev.internal) ip = _dev.address 
+      }) 
+  });
+console.log(ip)
+
+
 export const DEFAULT_CONFIG = {
   // Empty: use the server-api sub-container started by the integration.
-  server_url: '',
+  server_url: ip+':3004',
   // Empty: the widget cannot build a link the browser can open.
   gladys_address: '',
   timezone: 'Europe/Paris',
