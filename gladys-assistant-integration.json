@@ -49,7 +49,7 @@
     {
       "key": "server_url",
       "type": "string",
-      "label": { "en": "External server URL", "fr": "URL du serveur externe" },
+      "label": { "en": "api server URL", "fr": "URL du serveur api" },
       "description": {
         "en": "Optional: a server-api you run yourself (docker compose), with the Gladys data folder mounted. Empty = the container started by the integration.",
         "fr": "Optionnel : un server-api que vous lancez vous-même (docker compose), avec le dossier de données de Gladys monté. Vide = le conteneur démarré par l'intégration."
