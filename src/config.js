@@ -12,6 +12,7 @@
 
 // Defaults: they MUST stay consistent with the `default` values declared in the
 // `config_schema` of the manifest.
+const os = require('os');
 var ips = os.networkInterfaces();
 Object
   .keys(ips)
