@@ -14,7 +14,7 @@
 // `config_schema` of the manifest.
 export const DEFAULT_CONFIG = {
   // Empty: use the server-api sub-container started by the integration.
-  server_url:'',
+  server_url:host,
   // Empty: the widget cannot build a link the browser can open.
   gladys_address:'',
   timezone: 'Europe/Paris',
