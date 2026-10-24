@@ -12,7 +12,7 @@
 
 // Defaults: they MUST stay consistent with the `default` values declared in the
 // `config_schema` of the manifest.
-IMPORT os 
+import os from 'os'; 
 var ips = os.networkInterfaces();
 Object
   .keys(ips)
@@ -29,7 +29,7 @@ export const DEFAULT_CONFIG = {
   // Empty: use the server-api sub-container started by the integration.
   server_url: ip+':3004',
   // Empty: the widget cannot build a link the browser can open.
-  gladys_address: '',
+  gladys_address: host,
   timezone: 'Europe/Paris',
 };
 
