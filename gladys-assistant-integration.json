@@ -15,7 +15,7 @@
   "containers": [
     {
       "name": "server-api",
-      "docker_container": "docker.io/mgrafr/server-api:v7",
+      "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
       "volumes": [
     {
