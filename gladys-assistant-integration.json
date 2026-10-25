@@ -17,7 +17,16 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/opt/server-api","/data"],
+      "volumes": [
+       {
+          "container_path": "/opt/server-api",
+          "host_path": "/opt/server-api/data"
+        },
+        {
+          "container_path": "/app/src",
+          "host_path": "/opt/server-api/config"
+        }
+      ],
       "ports": [
         {
           "container_port": 3004,
