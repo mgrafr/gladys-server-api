@@ -19,7 +19,7 @@
       "start": "manual",
       "volumes": [
     {
-     "container_path": "/data/server-api/backups",
+     "container_path": "/data",
       "host_path": "/opt/server-api/backups"
     }
     ],
