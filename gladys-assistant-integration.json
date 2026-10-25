@@ -19,8 +19,8 @@
       "start": "manual",
       "volumes": [
     {
-     "container_path": "/data/backups",
-      "host_path": "/opt/server-api/backups"
+      "container_path": "/data/backups",
+      "host_path": "/tmp/backups"
     }
     ],
       "ports": [
