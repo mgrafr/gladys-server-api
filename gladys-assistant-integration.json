@@ -15,11 +15,11 @@
   "containers": [
     {
       "name": "server-api",
-      "docker_image": "docker.io/mgrafr/server-api:v7",
+      "docker_container": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
       "volumes": [
     {
-     "container_path": "/data",
+     "container_path": "/data/backups",
       "host_path": "/opt/server-api/backups"
     }
     ],
