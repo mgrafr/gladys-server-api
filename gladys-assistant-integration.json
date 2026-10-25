@@ -19,12 +19,8 @@
       "start": "manual",
       "volumes": [
        {
-          "container_path": "/opt/server-api",
-          "host_path": "/opt/server-api/data"
-        },
-        {
-          "container_path": "/app/src",
-          "host_path": "/opt/server-api/config"
+          "container_path": "/opt/server-api/backups",
+          "host_path": "/data/backups"
         }
       ],
       "ports": [
