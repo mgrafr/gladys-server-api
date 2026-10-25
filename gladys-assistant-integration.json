@@ -18,11 +18,11 @@
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
       "volumes": [
-    {
-      "container_path": "/data/backups",
-      "host_path": "/tmp/backups"
-    }
-    ],
+        {
+          "container_path": "/data/backups",
+          "host_path": "/tmp/backups"
+        }
+      ],
       "ports": [
         {
           "container_port": 3004,
