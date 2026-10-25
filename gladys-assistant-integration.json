@@ -20,7 +20,7 @@
       "volumes": [
        {
           "container_path": "/opt/server-api/backups",
-          "host_path": "/data/backups"
+          "host_path": "/opt/server-api/backups"
         }
       ],
       "ports": [
