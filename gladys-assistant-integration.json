@@ -19,8 +19,8 @@
       "start": "manual",
       "volumes": [
     {
-     "container_path": "/data/backups",
-      "host_path": "/var/lib/gladysassistant/backups"
+     "container_path": "/data/server-api/backups",
+      "host_path": "/opt/server-api/backups"
     }
     ],
       "ports": [
