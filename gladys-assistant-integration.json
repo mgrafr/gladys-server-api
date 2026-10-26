@@ -45,6 +45,7 @@
           "label": { "en": "server-api on GitHub", "fr": "server-api sur GitHub" }
         }
       ],
+    }
      {
       "key": "server_url",
       "type": "section",
@@ -52,14 +53,15 @@
       "description": {
         "en": "the server-api container, reachable at http:/",
         "fr": "le conteneur server-api est joignable sur l'adresse ci-dessus , il suffit d'ajouter la commande ex: download "
-    },
+      },
+     }
     {
       "key": "gladys_address",
       "type": "section",
       "label": { "en": "Gladys IP address: {{gladys_host}}", "fr": "Adresse IP de Gladys: {{gladys_host}}" },
       "description": {
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
-        "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
+        "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."}
      },
     {
       "key": "timezone",
