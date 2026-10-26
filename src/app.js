@@ -8,6 +8,7 @@ import { normalizeConfig } from './config.js';
 import {
   DATA_DIR,
   backup,
+  restore,
   checkServer,
   ensureServer,
   formatSize,
