@@ -64,7 +64,7 @@
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
         "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
       },
-      "placeholder": { "en": "http://{{gladys_host}}:{{port:server_api}", "fr": "http://{{gladys_host}}:{{port:server_api}" },
+      "placeholder": { "en": "http://{{gladys_host}}:{{port:server_api}}", "fr": "http://{{gladys_host}}:{{port:server_api}}" },
       "required": false
     },
     {
