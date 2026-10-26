@@ -8,7 +8,6 @@ import { normalizeConfig } from './config.js';
 import {
   DATA_DIR,
   backup,
-  restore,
   checkServer,
   ensureServer,
   formatSize,
@@ -35,15 +34,6 @@ export function registerHandlers(gladys, { dataDir = DATA_DIR, fetch = globalThi
       onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
     });
 
-const runRestore = () =>
-    backup(gladys, {
-      config,
-      dataDir,
-      fetch,
-      //onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
-    });
-
-  
   async function setup() {
     await ensureServer(gladys, config, dataDir);
     await gladys.setConnectionStatus(true);
@@ -67,23 +57,6 @@ const runRestore = () =>
     };
   });
 
-gladys.onAction('restore', async () => {
-    logger.info('Action restore');
-    const { size_bytes, url, data_missing } = await runRestore();
-    const size = { en: formatSize(size_bytes, 'en'), fr: formatSize(size_bytes, 'fr') };
-    const where = url ?? '';
-    if (data_missing) {
-      return {
-        en: `Restore done (${size.en}), but the Gladys data folder is not mounted in the container: the archive is empty. See the documentation. ${where}`.trim(),
-        fr: `Restore effectuée (${size.fr}), mais le dossier de données de Gladys n'est pas monté dans le conteneur : l'archive est vide. Voir la documentation. ${where}`.trim(),
-      };
-    }
-    return {
-      en: `Restore done (${size.en}). ${where}`.trim(),
-      fr: `Restauration effectuée (${size.fr}). ${where}`.trim(),
-    };
-  });
-  
   gladys.onAction('test_server', async () => {
     const baseUrl = internalBaseUrl(config);
     logger.info(`Action test_server -> ${baseUrl}`);
@@ -92,6 +65,13 @@ gladys.onAction('restore', async () => {
       en: `server-api answers on ${baseUrl}.`,
       fr: `server-api répond sur ${baseUrl}.`,
     };
+  });
+
+  // --- Scene action: a scene can schedule the backup -------------------------
+  // Outputs are scalars only: an unknown link becomes an empty string.
+  gladys.onSceneAction('backup', async () => {
+    const { size_bytes, url } = await runBackup();
+    return { url: url ?? '', size_bytes };
   });
 
   // --- Dashboard widget ------------------------------------------------------
