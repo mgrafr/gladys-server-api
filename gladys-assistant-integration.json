@@ -81,12 +81,6 @@
       "key": "backup",
       "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
       "timeout_seconds": 120,
-      "links": [
-        {
-          "url": "https://{{gladys_host}}:{{port:server_api}}/download_bd",
-          "label": { "en": "url pour télécharger la sauvegarde", "fr": "url pour télécharger la sauvegarde" }
-        }
-      ]
     },
     {
       "key": "restore",
