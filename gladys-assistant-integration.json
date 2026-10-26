@@ -53,9 +53,10 @@
         "en": "Optional: a server-api you run yourself (docker compose), with the Gladys data folder mounted. Empty = the container started by the integration.",
         "fr": "Optionnel : un server-api que vous lancez vous-même (docker compose), avec le dossier de données de Gladys monté. Vide = le conteneur démarré par l'intégration."
       },
-       "placeholder": { "en": "e.g. http://192.168.1.131:3004", "fr": "ex. http://192.168.1.131:3004" },
-      "required": false
-    },
+      description": {
+        "en": "the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}",
+        "fr": "le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}"
+      },
     {
       "key": "gladys_address",
       "type": "string",
