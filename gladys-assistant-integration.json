@@ -47,12 +47,8 @@
     },
     {
       "key": "server_url",
-      "type": "string",
-      "label": { "en": "api server URL", "fr": "URL du serveur api" },
-      "description": {
-        "en": "Optional: a server-api you run yourself (docker compose), with the Gladys data folder mounted. Empty = the container started by the integration.",
-        "fr": "Optionnel : un server-api que vous lancez vous-même (docker compose), avec le dossier de données de Gladys monté. Vide = le conteneur démarré par l'intégration."
-      },
+      "type": "section",
+      "label": { "en": "api server URL:http://{{gladys_host}}:{{port:server_api}}", "fr": "URL du serveur api:http://{{gladys_host}}:{{port:server_api}}" },
       "description": {
         "en": "the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}",
         "fr": "le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}"
@@ -92,29 +88,6 @@
       "key": "test_server",
       "label": { "en": "Test the API server", "fr": "Tester le serveur API" },
       "timeout_seconds": 15
-    }
-  ],
-  "scene_actions": [
-    {
-      "key": "backup",
-      "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
-      "description": {
-        "en": "Run a backup of the Gladys databases through server-api.",
-        "fr": "Lance une sauvegarde des bases de données de Gladys via server-api."
-      },
-      "timeout_seconds": 120,
-      "outputs": [
-        {
-          "key": "url",
-          "type": "string",
-          "label": { "en": "Download link", "fr": "Lien de téléchargement" }
-        },
-        {
-          "key": "size_bytes",
-          "type": "number",
-          "label": { "en": "Archive size (bytes)", "fr": "Taille de l'archive (octets)" }
-        }
-      ]
     }
   ],
   "widgets": [
