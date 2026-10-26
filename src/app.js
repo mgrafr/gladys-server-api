@@ -67,13 +67,6 @@ export function registerHandlers(gladys, { dataDir = DATA_DIR, fetch = globalThi
     };
   });
 
-  // --- Scene action: a scene can schedule the backup -------------------------
-  // Outputs are scalars only: an unknown link becomes an empty string.
-  gladys.onSceneAction('backup', async () => {
-    const { size_bytes, url } = await runBackup();
-    return { url: url ?? '', size_bytes };
-  });
-
   // --- Dashboard widget ------------------------------------------------------
   gladys.onWidgetGet(LAST_BACKUP_WIDGET, async ({ language }) =>
     buildLastBackupContent(await loadState(dataDir), { language, timezone: config.timezone }),
