@@ -17,6 +17,16 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
+      "volumes": [
+        {
+          "container_path": "/data",
+          "host_path_type": "gladys_data_dir",
+          "host_path_suffix": "server-api/data"
+        }
+      ],
+      "environment": {
+        "NODE_ENV": "production"
+      }
       "ports": [
         {
           "container_port": 3004,
