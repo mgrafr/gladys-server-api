@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "type": "provider",
-  "name": "Server API",https://github.com/mgrafr/gladys-server-api/security
+  "name": "Server API",https://github.com/mgrafr/gladys-server-api
   "description": {
     "en": "Back up the Gladys databases through a Node.js (Fastify) API server.",
     "fr": "Sauvegarde des bases de données de Gladys via un serveur API Node.js (Fastify)."
