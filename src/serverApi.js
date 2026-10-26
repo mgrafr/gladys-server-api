@@ -103,10 +103,7 @@ export function internalBaseUrl(config) {
  * @param {{ server_url: string, gladys_address: string }} config
  */
 export async function publicBaseUrl(gladys, config) {
-  if (config.server_url) {
-    return config.server_url;
-  }
-  if (!config.gladys_address) {
+ if (!config.gladys_address) {
     return null;
   }
   const containers = await gladys.getContainers();
