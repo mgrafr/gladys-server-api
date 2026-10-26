@@ -35,6 +35,15 @@ export function registerHandlers(gladys, { dataDir = DATA_DIR, fetch = globalThi
       onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
     });
 
+const runRestore = () =>
+    backup(gladys, {
+      config,
+      dataDir,
+      fetch,
+      //onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
+    });
+
+  
   async function setup() {
     await ensureServer(gladys, config, dataDir);
     await gladys.setConnectionStatus(true);
