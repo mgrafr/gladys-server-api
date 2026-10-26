@@ -13,9 +13,7 @@
 // Defaults: they MUST stay consistent with the `default` values declared in the
 // `config_schema` of the manifest.
 export const DEFAULT_CONFIG = {
- // Empty: the widget cannot build a link the browser can open.
-  gladys_address:'',
-  timezone: 'Europe/Paris',
+ timezone: 'Europe/Paris',
 };
 
 function trimmedString(value) {
@@ -39,10 +37,6 @@ export function normalizeConfig(raw = {}) {
   return {
     ...DEFAULT_CONFIG,
     ...raw,
-    // Accept "http://192.168.1.5/" as well as "192.168.1.5": only the host is kept.
-    gladys_address: trimmedString(raw.gladys_address)
-      .replace(/^https?:\/\//, '')
-      .replace(/\/.*$/, ''),
     timezone: validTimezone(trimmedString(raw.timezone) || DEFAULT_CONFIG.timezone),
   };
 }
