@@ -87,7 +87,7 @@
           "label": { "en": "url pour télécharger la sauvegarde", "fr": "url pour télécharger la sauvegarde" }
         }
       ]
-    }
+    },
     {
       "key": "restore",
       "label": { "en": "Restore the databases", "fr": "Restaurer les bases de données" },
