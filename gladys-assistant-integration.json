@@ -35,8 +35,8 @@
       "type": "section",
       "label": { "en": "Getting started", "fr": "Pour commencer" },
       "description": {
-        "en": "The integration starts the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}/download-stream. Leave the external server URL empty to use it.",
-        "fr": "L'intégration démarre le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}/download-stream. Laissez l'URL du serveur externe vide pour l'utiliser."
+        "en": "The integration starts the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}/download-stream. ",
+        "fr": "L'intégration démarre le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}/download-stream. ."
       },
       "links": [
         {
@@ -50,20 +50,18 @@
       "type": "section",
       "label": { "en": "api server URL:http://{{gladys_host}}:{{port:server_api}}", "fr": "URL du serveur api:http://{{gladys_host}}:{{port:server_api}}" },
       "description": {
-        "en": "the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}",
-        "fr": "le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}"
+        "en": "the server-api container, reachable at http:/",
+        "fr": "le conteneur server-api est joignable sur l'adresse ci-dessus , il suffit d'ajouter la commande ex: download "
       }
       },
     {
       "key": "gladys_address",
-      "type": "string",
-      "label": { "en": "Gladys IP address", "fr": "Adresse IP de Gladys" },
+      "type": "section",
+      "label": { "en": "Gladys IP address: {{gladys_host}}", "fr": "Adresse IP de Gladys: {{gladys_host}}" },
       "description": {
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
         "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
-      },
-      "placeholder": { "en": "http://{{gladys_host}}:{{port:server_api}}", "fr": "http://{{gladys_host}}:{{port:server_api}}" },
-      "required": false
+      }
     },
     {
       "key": "timezone",
