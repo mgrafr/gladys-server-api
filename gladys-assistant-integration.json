@@ -80,7 +80,7 @@
     {
       "key": "backup",
       "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
-      "timeout_seconds": 120,
+      "timeout_seconds": 120
     },
     {
       "key": "test_server",
