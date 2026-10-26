@@ -17,7 +17,7 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/server-api/config", "/server-api/data"],
+      "volumes": ["/opt/server-api/backups", "/opt/server-api/data"], "/var/lib/gladysassistant/server-api",
       "ports": [
         {
           "container_port": 3004,
@@ -36,8 +36,8 @@
       "type": "section",
       "label": { "en": "Getting started", "fr": "Pour commencer" },
       "description": {
-        "en": "The integration starts the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}/download-stream. ",
-        "fr": "L'intégration démarre le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}/download-stream. ."
+        "en": "The integration starts a Node.js server that lets you save and restore databases and run scripts on demand.",
+        "fr": "L'intégration démarre un serveur nodejs qui permet de sauvegarder et restaurer les Bases de onnées et à la demande exécuter des scripts."
       },
       "links": [
         {
