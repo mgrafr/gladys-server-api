@@ -17,13 +17,7 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": [
-        {
-          "container_path": "/app/data",
-          "host_path_type": "/var/lib/gladysassistant",
-          "host_path_suffix": "/opt/server-api/"
-        }
-      ],
+      "volumes": ["/server-api/config", "/server-api/data"],
       "ports": [
         {
           "container_port": 3004,
