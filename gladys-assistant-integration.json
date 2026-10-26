@@ -54,7 +54,7 @@
         "en": "the server-api container, reachable at http:/",
         "fr": "le conteneur server-api est joignable sur l'adresse ci-dessus , il suffit d'ajouter la commande ex: download "
       }
-     }.
+     },
     {
       "key": "gladys_address",
       "type": "section",
