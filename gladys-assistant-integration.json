@@ -43,8 +43,7 @@
         {
           "url": "https://github.com/mgrafr/server-api",
           "label": { "en": "server-api on GitHub", "fr": "server-api sur GitHub" }
-        }
-      ]
+        ]
     },
     {
       "key": "server_url",
