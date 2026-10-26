@@ -19,14 +19,11 @@
       "start": "manual",
       "volumes": [
         {
-          "container_path": "/data",
+          "container_path": "/opt/server-api/backups",
           "host_path_type": "/var/lib/gladysassistant",
-          "host_path_suffix": "/opt/server-api/data"
+          "host_path_suffix": "/opt/server-api/"
         }
       ],
-      "environment": {
-        "NODE_ENV": "production"
-      },
       "ports": [
         {
           "container_port": 3004,
