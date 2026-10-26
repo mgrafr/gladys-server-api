@@ -17,7 +17,7 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/opt/server-api/backups", "/opt/server-api/data", "/var/lib/gladysassistant/server-api"]
+      "volumes": ["/opt/server-api/backups", "/opt/server-api/data", "/var/lib/gladysassistant/server-api"],
       "ports": [
         {
           "container_port": 3004,
