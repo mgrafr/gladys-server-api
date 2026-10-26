@@ -142,8 +142,8 @@ export async function checkServer(baseUrl, { fetch = globalThis.fetch } = {}) {
  * @returns {Promise<{ size_bytes: number }>}
  */
 export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <- GET ${baseUrl}/backup`);
-  const response = await fetch(`${baseUrl}/backup`, {
+  logger.info(`Backup <- GET ${baseUrl}/backup_bd`);
+  const response = await fetch(`${baseUrl}/backup_bd`, {
     signal: AbortSignal.timeout(BACKUP_TIMEOUT_MS),
   });
   if (!response.ok) {
