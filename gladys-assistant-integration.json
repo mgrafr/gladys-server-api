@@ -7,7 +7,7 @@
     "fr": "Sauvegarde des bases de données de Gladys via un serveur API Node.js (Fastify)."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.5",
+  "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.6",
   "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.png",
   "categories": ["services"],
@@ -15,9 +15,9 @@
   "containers": [
     {
       "name": "server-api",
-      "docker_image": "docker.io/mgrafr/server-api:v6",
+      "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/opt/server-api"],
+      "volumes": ["/opt/server-api/backups", "/opt/server-api/data"],
       "ports": [
         {
           "container_port": 3004,
@@ -36,8 +36,8 @@
       "type": "section",
       "label": { "en": "Getting started", "fr": "Pour commencer" },
       "description": {
-        "en": "The integration starts the server-api container, reachable at http://{{gladys_host}}:{{port:server_api}}/backup. Leave the external server URL empty to use it.",
-        "fr": "L'intégration démarre le conteneur server-api, joignable sur http://{{gladys_host}}:{{port:server_api}}/backup. Laissez l'URL du serveur externe vide pour l'utiliser."
+        "en": "The integration starts a Node.js server that lets you save and restore databases and run scripts on demand.",
+        "fr": "L'intégration démarre un serveur nodejs qui permet de sauvegarder et restaurer les Bases de onnées et à la demande exécuter des scripts."
       },
       "links": [
         {
@@ -46,28 +46,23 @@
         }
       ]
     },
-    {
+     {
       "key": "server_url",
-      "type": "string",
-      "label": { "en": "External server URL", "fr": "URL du serveur externe" },
+      "type": "section",
+      "label": { "en": "api server URL:http://{{gladys_host}}:{{port:server_api}}", "fr": "URL du serveur api:http://{{gladys_host}}:{{port:server_api}}" },
       "description": {
-        "en": "Optional: a server-api you run yourself (docker compose), with the Gladys data folder mounted. Empty = the container started by the integration.",
-        "fr": "Optionnel : un server-api que vous lancez vous-même (docker compose), avec le dossier de données de Gladys monté. Vide = le conteneur démarré par l'intégration."
-      },
-      "placeholder": { "en": "e.g. http://192.168.1.5:3004", "fr": "ex. http://192.168.1.5:3004" },
-      "required": false
-    },
+        "en": "the server-api container, reachable at http:/",
+        "fr": "le conteneur server-api est joignable sur l'adresse ci-dessus , il suffit d'ajouter la commande ex: download "
+      }
+     },
     {
       "key": "gladys_address",
-      "type": "string",
-      "label": { "en": "Gladys IP address", "fr": "Adresse IP de Gladys" },
+      "type": "section",
+      "label": { "en": "Gladys IP address: {{gladys_host}}", "fr": "Adresse IP de Gladys: {{gladys_host}}" },
       "description": {
         "en": "Address your browser uses to reach Gladys on the LAN: it builds the download link shown in the widget.",
-        "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."
-      },
-      "placeholder": { "en": "e.g. 192.168.1.5", "fr": "ex. 192.168.1.5" },
-      "required": false
-    },
+        "fr": "Adresse utilisée par votre navigateur pour joindre Gladys sur le réseau local : elle sert au lien de téléchargement affiché dans le widget."}
+     },
     {
       "key": "timezone",
       "type": "string",
@@ -88,32 +83,14 @@
       "timeout_seconds": 120
     },
     {
+      "key": "restore",
+      "label": { "en": "Back up the databases", "fr": "Restaurerer les bases de données" },
+      "timeout_seconds": 120
+    },
+    {
       "key": "test_server",
       "label": { "en": "Test the API server", "fr": "Tester le serveur API" },
       "timeout_seconds": 15
-    }
-  ],
-  "scene_actions": [
-    {
-      "key": "backup",
-      "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
-      "description": {
-        "en": "Run a backup of the Gladys databases through server-api.",
-        "fr": "Lance une sauvegarde des bases de données de Gladys via server-api."
-      },
-      "timeout_seconds": 120,
-      "outputs": [
-        {
-          "key": "url",
-          "type": "string",
-          "label": { "en": "Download link", "fr": "Lien de téléchargement" }
-        },
-        {
-          "key": "size_bytes",
-          "type": "number",
-          "label": { "en": "Archive size (bytes)", "fr": "Taille de l'archive (octets)" }
-        }
-      ]
     }
   ],
   "widgets": [
