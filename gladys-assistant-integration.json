@@ -83,6 +83,11 @@
       "timeout_seconds": 120
     },
     {
+      "key": "restore",
+      "label": { "en": "Back up the databases", "fr": "Restaurerer les bases de données" },
+      "timeout_seconds": 120
+    },
+    {
       "key": "test_server",
       "label": { "en": "Test the API server", "fr": "Tester le serveur API" },
       "timeout_seconds": 15
