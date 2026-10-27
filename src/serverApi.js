@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // Driver of the server-api container (https://github.com/mgrafr/server-api).
 //
-// server-api is a Fastify server: `GET /backup` runs its `save.sh` script,
+// server-api is a Fastify server: `GET /backup_bd` runs its `save.sh` script,
 // which archives the Gladys data folder into
 // /opt/server-api/backups/datas.tar.gz, then answers that archive as an
 // attachment. The same file is served statically, so the browser can download
@@ -132,15 +132,15 @@ export async function checkServer(baseUrl, { fetch = globalThis.fetch } = {}) {
 }
 
 /**
- * Run a backup: `GET /backup`, the archive comes back as the response body.
+ * Run a backup: `GET /backup_bd`, the archive comes back as the response body.
  * The body is only counted, never kept: the archive stays on the server side.
  * @param {string} baseUrl
  * @param {{ fetch?: typeof fetch }} [options]
  * @returns {Promise<{ size_bytes: number }>}
  */
 export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <- GET ${baseUrl}/backup`);
-  const response = await fetch(`${baseUrl}/backup`, {
+  logger.info(`Backup <- GET ${baseUrl}/backup_bd`);
+  const response = await fetch(`${baseUrl}/backup_bd`, {
     signal: AbortSignal.timeout(BACKUP_TIMEOUT_MS),
   });
   if (!response.ok) {
