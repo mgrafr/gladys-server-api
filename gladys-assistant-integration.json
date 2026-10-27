@@ -7,7 +7,7 @@
     "fr": "Sauvegarde des bases de données de Gladys via un serveur API Node.js (Fastify)."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.6",
+  "docker_image": "ghcr.io/mgrafr/gladys-server-api:1.0.7",
   "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/mgrafr/gladys-server-api/main/cover.png",
   "categories": ["services"],
