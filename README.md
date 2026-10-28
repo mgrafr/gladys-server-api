@@ -2,8 +2,10 @@
 
 Intégration externe [Gladys Assistant](https://gladysassistant.com) qui installe
 le conteneur [server-api](https://github.com/mgrafr/server-api)
-(`mgrafr/server-api:v4`, un serveur Fastify) et l'utilise pour sauvegarder les
-bases de données de Gladys.
+(`mgrafr/server-api:v4`, un serveur Fastify) et l'utilise pour:
+- sauvegarder les bases de données de Gladys.
+- restaurer les bases de données sauvegardées.
+- lancer des scripts externes (par exemple envoyer des SMS depuis un modem gsm 4G LTE) 
 
 _English below._
 
@@ -19,18 +21,16 @@ _English below._
 
 La documentation utilisateur est dans [`docs/fr.md`](./docs/fr.md) et
 [`docs/en.md`](./docs/en.md). **Lisez la section sur l'accès aux données de
-Gladys** : dans le bac à sable de Gladys, le conteneur de l'intégration ne peut
-pas lire `/var/lib/gladysassistant`. Pour une vraie sauvegarde, lancez
-server-api sur l'hôte et renseignez son URL dans la configuration.
+Gladys** : dans le bac à sable de Gladys
 
 ## Fonctionnement
 
 ```
 Gladys ──WebSocket── intégration (ce dépôt, ghcr.io/mgrafr/gladys-server-api)
-                         │  écrit save.sh dans /data/containers/server-api/opt/server-api
+                         │  écrit save.sh dans /data/containers/server-api/opt/server-api/src
                          │  startContainer('server-api')
-                         └── GET http://server-api:3004/backup ──> conteneur server-api
-                                                                   (mgrafr/server-api:v4)
+                         └── GET http://<server Gladys>:<port du conteneur attribué par Gladys>/backup_bd
+                                            ──> conteneur server-api(mgrafr/server-api:v4)
 ```
 
 - Le sous-conteneur `server-api` est déclaré dans le champ `containers` du
@@ -40,9 +40,8 @@ Gladys ──WebSocket── intégration (ce dépôt, ghcr.io/mgrafr/gladys-ser
 - L'intégration le joint par son alias DNS `server-api` sur le réseau privé.
   Gladys publie le port 3004 sur un port de l'hôte qu'il choisit lui-même, et
   le widget construit le lien avec ce port.
-- L'archive est servie par server-api sur
-  `/opt/server-api/backups/datas.tar.gz`. Le résultat de la dernière
-  sauvegarde est mémorisé dans `/data/last-backup.json`.
+  - L'archive est servie par server-api sur /opt/server-api/backups/datas.tar.gz`
+  - . Le résultat de la dernière sauvegarde est mémorisé dans `/data/last-backup.json`.
 
 ```
 index.js                          connexion du SDK
