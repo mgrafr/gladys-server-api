@@ -8,6 +8,7 @@ import { normalizeConfig } from './config.js';
 import {
   DATA_DIR,
   backup,
+  restore,
   checkServer,
   ensureServer,
   formatSize,
@@ -33,7 +34,14 @@ export function registerHandlers(gladys, { dataDir = DATA_DIR, fetch = globalThi
       fetch,
       onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
     });
-
+  const runRestore = () =>
+    restore(gladys, {
+      config,
+      dataDir,
+      fetch,
+      // onRecorded: () => gladys.requestWidgetRefresh(LAST_BACKUP_WIDGET),
+    });
+  
   async function setup() {
     await ensureServer(gladys, config, dataDir);
     await gladys.setConnectionStatus(true);
