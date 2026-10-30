@@ -173,10 +173,10 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
  * @param {{ fetch?: typeof fetch }} [options]
  * @returns {Promise<{ size_bytes: number }>}
  */
-export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <- POST ${baseUrl}/restore_bd`);
-  const response = await fetch(`${baseUrl}/restore_bd_bd`, {
-    signal: AbortSignal.timeout(BACKUP_TIMEOUT_MS),
+export async function runRestore(baseUrl, { fetch = globalThis.fetch } = {}) {
+  logger.info(`Backup <- POST ${baseUrl}/upload`);
+  const response = await fetch(`${baseUrl}/upload`, {
+    signal: AbortSignal.timeout(RESTORE_UPLOAD_TIMEOUT_MS),
   });
   if (!response.ok) {
     let details = '';
@@ -192,7 +192,7 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
   for await (const chunk of response.body ?? []) {
     size += chunk.length;
   }
-  logger.info(`Backup done, ${size} bytes`);
+  logger.info(`Restore done, ${size} bytes`);
   return { size_bytes: size };
 }
 
