@@ -302,33 +302,6 @@ export async function backup(
   }
 }
 
-export async function restore(
-  gladys,
-  { config, dataDir = DATA_DIR, fetch = globalThis.fetch, now = () => new Date(), onRecorded },
-) {
-  const previous = await loadState(dataDir);
-  try {
-    const { size_bytes } = await runBackup(internalBaseUrl(config), { fetch });
-    const state = {
-      last_success_at: now().toISOString(),
-      size_bytes,
-      url: archiveUrl(await publicBaseUrl(gladys, config)),
-      // An external server reads the real Gladys folder: nothing to check.
-      data_missing: config.server_url ? false : await gladysDataMissing(dataDir),
-    };
-    await saveState(state, dataDir);
-    return state;
-  } catch (err) {
-    await saveState(
-      { ...previous, last_error: err.message, last_error_at: now().toISOString() },
-      dataDir,
-    );
-    throw err;
-  } finally {
-    onRecorded?.();
-  }
-}
-
 
 /** Human-readable size, e.g. 7340032 -> "7.0 MB". */
 export function formatSize(bytes, language = 'en') {
