@@ -84,7 +84,7 @@
     },
     {
       "key": "restore",
-      "label": { "en": "Restore the databases", "fr": "Restaurerer les bases de données" },
+      "label": { "en": "Restore the databases  (sqlite3 db, duckdb, duckdb.wal)", "fr": "Restaurerer les bases de données sqlite3 db, duckdb, duckdb.wal)" },
       "timeout_seconds": 120
     },
     {
