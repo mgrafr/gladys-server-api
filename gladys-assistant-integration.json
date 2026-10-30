@@ -20,7 +20,7 @@
       "volumes": ["/opt/server-api/backups", "/opt/server-api/data"],
       "ports": [
         {
-          "container_port": 3004,
+          "container_port": 3006,
           "name": "server_api",
           "label": { "en": "Server API", "fr": "Serveur API" },
           "browsable": false
@@ -82,9 +82,13 @@
       "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
       "timeout_seconds": 120
     },
+      "description": {
+        "en": "IANA time zone of the backup date shown in the widget.",
+        "fr": "Lorsque DuckDB ouvre la sauvegarde, il rejoue automatiquement le WAL. Cela vous donne l’état le plus récent.."
+      },
     {
       "key": "restore",
-      "label": { "en": "Back up the databases", "fr": "Restaurerer les bases de données" },
+      "label": { "en": "Restore the databases", "fr": "Restaurerer les bases de données" },
       "timeout_seconds": 120
     },
     {
