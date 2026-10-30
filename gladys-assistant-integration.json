@@ -79,13 +79,9 @@
   "actions": [
     {
       "key": "backup",
-      "label": { "en": "Back up the databases", "fr": "Sauvegarder les bases de données" },
+      "label": { "en": "Back up the sqlite3 & duck databases db, duckdb, duckdb.wal)", "fr": "Sauvegarder les bases de données sqlite3 db, duckdb, duckdb.wal)" },
       "timeout_seconds": 120
     },
-      "description": {
-        "en": "IANA time zone of the backup date shown in the widget.",
-        "fr": "Lorsque DuckDB ouvre la sauvegarde, il rejoue automatiquement le WAL. Cela vous donne l’état le plus récent.."
-      },
     {
       "key": "restore",
       "label": { "en": "Restore the databases", "fr": "Restaurerer les bases de données" },
