@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // Driver of the server-api container (https://github.com/mgrafr/server-api).
 //
-// server-api is a Fastify server: `GET /backup` runs its `save.sh` script,
+// server-api is a Fastify server: `GET /backup_bd` runs its `save.sh` script,
 // which archives the Gladys data folder into
 // /opt/server-api/backups/datas.tar.gz, then answers that archive as an
 // attachment. The same file is served statically, so the browser can download
@@ -35,7 +35,7 @@ export const INTERNAL_URL = `http://${CONTAINER_NAME}:${CONTAINER_PORT}`;
 
 // Served by the @fastify/static plugin of server-api.
 export const ARCHIVE_PATH = '/opt/server-api/backups/datas.tar.gz';
-export const ARCHIVE_RESTORE_PATH = '/opt/server-api/uploads/datas.tar.gz';
+
 // The only writable volume of the main container. Overridable for local runs.
 export const DATA_DIR = process.env.DATA_DIR ?? '/data';
 
@@ -45,7 +45,6 @@ const BACKUP_TIMEOUT_MS = 110_000;
 const HEALTH_TIMEOUT_MS = 10_000;
 
 const STATE_FILE = 'last-backup.json';
-const STATE_FILE_R = 'last-restore.json';
 const BUNDLED_SCRIPT = new URL('./save.sh', import.meta.url);
 
 // What tar writes to backup.log when the Gladys data folder is not mounted.
@@ -64,7 +63,6 @@ export async function prepareContainerFiles(dataDir = DATA_DIR) {
   const volume = containerVolumeDir(dataDir);
   await mkdir(path.join(volume, 'src'), { recursive: true });
   await mkdir(path.join(volume, 'backups'), { recursive: true });
-  await mkdir(path.join(volume, 'uploads'), { recursive: true });
   // Rewritten at every start: the script follows the integration version.
   await writeFile(path.join(volume, 'src', 'save.sh'), await readFile(BUNDLED_SCRIPT), {
     mode: 0o755,
@@ -105,10 +103,7 @@ export function internalBaseUrl(config) {
  * @param {{ server_url: string, gladys_address: string }} config
  */
 export async function publicBaseUrl(gladys, config) {
-  if (config.server_url) {
-    return config.server_url;
-  }
-  if (!config.gladys_address) {
+ if (!config.gladys_address) {
     return null;
   }
   const containers = await gladys.getContainers();
@@ -137,7 +132,7 @@ export async function checkServer(baseUrl, { fetch = globalThis.fetch } = {}) {
 }
 
 /**
- * Run a backup: `GET /backup8-bd`, the archive comes back as the response body.
+ * Run a backup: `GET /backup_bd`, the archive comes back as the response body.
  * The body is only counted, never kept: the archive stays on the server side.
  * @param {string} baseUrl
  * @param {{ fetch?: typeof fetch }} [options]
@@ -164,69 +159,6 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
   }
   logger.info(`Backup done, ${size} bytes`);
   return { size_bytes: size };
-}
-/**
- * Run a restore: `GET /restore-bd`, the archive comes back as the response body.
- * The body is only counted, never kept: the archive stays on the server side.
- * @param {string} baseUrl
- * @param {{ fetch?: typeof fetch }} [options]
- * @returns {Promise<{ size_bytes: number }>}
- */
-export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <- POST ${baseUrl}/restore_bd`);
-  const response = await fetch(`${baseUrl}/restore_bd_bd`, {
-    signal: AbortSignal.timeout(BACKUP_TIMEOUT_MS),
-  });
-  if (!response.ok) {
-    let details = '';
-    try {
-      const body = await response.json();
-      details = body.details || body.error || '';
-    } catch {
-      // Not a JSON error body: the status says enough.
-    }
-    throw new Error(`Restore failed (HTTP ${response.status})${details ? `: ${details}` : ''}`);
-  }
-  let size = 0;
-  for await (const chunk of response.body ?? []) {
-    size += chunk.length;
-  }
-  logger.info(`Restore done, ${size} bytes`);
-  return { size_bytes: size };
-}
-
-/**
- * The restore operation shared by the manifest action, the scene action and the
- * widget button: run it, record the outcome, nudge the widget.
- * @param {import('@gladysassistant/integration-sdk').GladysIntegration} gladys
- * @param {{ config: object, dataDir?: string, fetch?: typeof fetch, now?: () => Date,
- *   onRecorded?: () => void }} options
- */
-export async function restore(
-  gladys,
-  { config, dataDir = DATA_DIR, fetch = globalThis.fetch, now = () => new Date(), onRecorded },
-) {
-  const previous = await loadState(dataDir);
-  try {
-    const { size_bytes } = await runRestore(internalBaseUrl(config), { fetch });
-    const state = {
-      last_success_at: now().toISOString(),
-      size_bytes,
-      url: archiveUrl(await publicBaseUrl(gladys, config)),
-      // An external server reads the real Gladys folder: nothing to check.
-      data_missing: config.server_url ? false : await gladysDataMissing(dataDir),
-    };
-    await saveState(state, dataDir);
-    return state;
-  } catch (err) {
-    await saveState(
-      { ...previous, last_error: err.message, last_error_at: now().toISOString() },
-      dataDir,
-    );
-    throw err;
-  } finally {
-    onRecorded?.();
-  }
 }
 
 /**
@@ -299,6 +231,34 @@ export async function backup(
     onRecorded?.();
   }
 }
+
+export async function restore(
+  gladys,
+  { config, dataDir = DATA_DIR, fetch = globalThis.fetch, now = () => new Date(), onRecorded },
+) {
+  const previous = await loadState(dataDir);
+  try {
+    const { size_bytes } = await runBackup(internalBaseUrl(config), { fetch });
+    const state = {
+      last_success_at: now().toISOString(),
+      size_bytes,
+      url: archiveUrl(await publicBaseUrl(gladys, config)),
+      // An external server reads the real Gladys folder: nothing to check.
+      data_missing: config.server_url ? false : await gladysDataMissing(dataDir),
+    };
+    await saveState(state, dataDir);
+    return state;
+  } catch (err) {
+    await saveState(
+      { ...previous, last_error: err.message, last_error_at: now().toISOString() },
+      dataDir,
+    );
+    throw err;
+  } finally {
+    onRecorded?.();
+  }
+}
+
 
 /** Human-readable size, e.g. 7340032 -> "7.0 MB". */
 export function formatSize(bytes, language = 'en') {
