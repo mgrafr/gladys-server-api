@@ -17,7 +17,7 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/opt/server-api/backups", "/opt/server-api/uploads"],
+      "volumes": ["/opt/server-api/backups", "/opt/server-api/uploads", "/var/lib/gladysassistant"],
       "ports": [
         {
           "container_port": 3004,
@@ -53,6 +53,16 @@
       "description": {
         "en": "the server-api container, reachable at http:/",
         "fr": "le conteneur server-api est joignable sur l'adresse ci-dessus , il suffit d'ajouter la commande ex: download "
+      }
+     },
+    {
+      "key": "upload",
+      "type": "section",
+      "label": { "en": "Download the backup: curl.exe -F file=@C:\<CHEMIN>\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}", 
+                 "fr": "télécharger une sauvegarde: curl.exe -F file=@C:\<CHEMIN>\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}" },
+      "description": {
+        "en": "the server-api container, reachable at http:/",
+        "fr": "pour importer une sauvegarde depuis un terminal avec curl; utiliser la commande ci-dessus"
       }
      },
     {
