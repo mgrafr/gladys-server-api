@@ -20,7 +20,7 @@
       "volumes": ["/opt/server-api/backups", "/opt/server-api/data"],
       "ports": [
         {
-          "container_port": 3006,
+          "container_port": 3004,
           "name": "server_api",
           "label": { "en": "Server API", "fr": "Serveur API" },
           "browsable": false
@@ -83,6 +83,11 @@
       "timeout_seconds": 120
     },
     {
+      "key": "upload",
+      "label": { "en": "Downloading a remote file", "fr": "Téléchargement d'un fichier distant" },
+      "timeout_seconds": 120
+    },
+     {
       "key": "restore",
       "label": { "en": "Restore the databases  (sqlite3 db, duckdb, duckdb.wal)", "fr": "Restaurerer les bases de données sqlite3 db, duckdb, duckdb.wal)" },
       "timeout_seconds": 120
