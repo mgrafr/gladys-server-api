@@ -83,11 +83,6 @@
       "timeout_seconds": 120
     },
     {
-      "key": "upload",
-      "label": { "en": "Downloading a remote database backup", "fr": "Téléchargement d'une sauvegarde de Bases de données distante" },
-      "timeout_seconds": 120
-    },
-     {
       "key": "restore",
       "label": { "en": "Restore the databases  (sqlite3 db, duckdb, duckdb.wal)", "fr": "Restaurer les bases de données sqlite3 db, duckdb, duckdb.wal)" },
       "timeout_seconds": 120
