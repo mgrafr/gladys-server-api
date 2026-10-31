@@ -43,7 +43,6 @@ export const DATA_DIR = process.env.DATA_DIR ?? '/data';
 // 120 s acknowledgement delay of the manifest action.
 const BACKUP_TIMEOUT_MS = 110_000;
 const RESTORE_TIMEOUT_MS = 110_000;
-const UPLOAD_TIMEOUT_MS = 110_000;
 const HEALTH_TIMEOUT_MS = 10_000;
 
 const STATE_FILE = 'last-backup.json';
@@ -211,69 +210,6 @@ export async function restore(
   const previous = await loadState(dataDir);
   try {
     const { size_bytes } = await runRestore(internalBaseUrl(config), { fetch });
-    const state = {
-      last_success_at: now().toISOString(),
-      size_bytes,
-      url: archiveUrl(await publicBaseUrl(gladys, config)),
-      // An external server reads the real Gladys folder: nothing to check.
-      data_missing: config.server_url ? false : await gladysDataMissing(dataDir),
-    };
-    await saveState(state, dataDir);
-    return state;
-  } catch (err) {
-    await saveState(
-      { ...previous, last_error: err.message, last_error_at: now().toISOString() },
-      dataDir,
-    );
-    throw err;
-  } finally {
-    onRecorded?.();
-  }
-}
-/**
- * Run a upload: `POST upload`, the archive comes back as the response body.
- * The body is only counted, never kept: the archive stays on the server side.
- * @param {string} baseUrl
- * @param {{ fetch?: typeof fetch }} [options]
- * @returns {Promise<{ size_bytes: number }>}
- */
-export async function runUpload(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <-GET ${baseUrl}/upload`);
-  const response = await fetch(`${baseUrl}/upload`, {
-    signal: AbortSignal.timeout(UPLOAD_TIMEOUT_MS),
-  });
-  if (!response.ok) {
-    let details = '';
-    try {
-      const body = await response.json();
-      details = body.details || body.error || '';
-    } catch {
-      // Not a JSON error body: the status says enough.
-    }
-    throw new Error(`Restore failed (HTTP ${response.status})${details ? `: ${details}` : ''}`);
-  }
-  let size = 0;
-  for await (const chunk of response.body ?? []) {
-    size += chunk.length;
-  }
-  logger.info(`Upload done, ${size} bytes`);
-  return { size_bytes: size };
-}
-/**
- * The upload operation shared by the manifest action, the scene action and the
- * widget button: run it, record the outcome, nudge the widget.
- * @param {import('@gladysassistant/integration-sdk').GladysIntegration} gladys
- * @param {{ config: object, dataDir?: string, fetch?: typeof fetch, now?: () => Date,
- *   onRecorded?: () => void }} options
- */
-
-export async function upload(
-  gladys,
-  { config, dataDir = DATA_DIR, fetch = globalThis.fetch, now = () => new Date(), onRecorded },
-) {
-  const previous = await loadState(dataDir);
-  try {
-    const { size_bytes } = await runUpload(internalBaseUrl(config), { fetch });
     const state = {
       last_success_at: now().toISOString(),
       size_bytes,
