@@ -17,7 +17,7 @@
       "name": "server-api",
       "docker_image": "docker.io/mgrafr/server-api:v7",
       "start": "manual",
-      "volumes": ["/opt/server-api/backups", "/opt/server-api/data"],
+      "volumes": ["/opt/server-api/backups", "/opt/server-api/uploads"],
       "ports": [
         {
           "container_port": 3004,
