@@ -177,7 +177,7 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
 export async function runRestore(baseUrl, { fetch = globalThis.fetch } = {}) {
   logger.info(`Backup <-GET ${baseUrl}/restore`);
   const response = await fetch(`${baseUrl}/restore`, {
-    signal: AbortSignal.timeout(RESTORE_RESTORE_TIMEOUT_MS),
+    signal: AbortSignal.timeout(RESTORE_TIMEOUT_MS),
   });
   if (!response.ok) {
     let details = '';
