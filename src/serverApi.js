@@ -168,15 +168,15 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
 }
 
 /**
- * Run a restore: `GET /restore-bd`, the archive comes back as the response body.
+ * Run a restore: `GET /restore_bd`, the archive comes back as the response body.
  * The body is only counted, never kept: the archive stays on the server side.
  * @param {string} baseUrl
  * @param {{ fetch?: typeof fetch }} [options]
  * @returns {Promise<{ size_bytes: number }>}
  */
 export async function runRestore(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <-GET ${baseUrl}/restore`);
-  const response = await fetch(`${baseUrl}/restore`, {
+  logger.info(`Backup <-GET ${baseUrl}/restore_bd`);
+  const response = await fetch(`${baseUrl}/restore_bd`, {
     signal: AbortSignal.timeout(RESTORE_TIMEOUT_MS),
   });
   if (!response.ok) {
@@ -230,7 +230,6 @@ export async function restore(
     onRecorded?.();
   }
 }
-
 /**
  * Run a upload: `POST upload`, the archive comes back as the response body.
  * The body is only counted, never kept: the archive stays on the server side.
@@ -238,7 +237,62 @@ export async function restore(
  * @param {{ fetch?: typeof fetch }} [options]
  * @returns {Promise<{ size_bytes: number }>}
  */
+export async function runUpload(baseUrl, { fetch = globalThis.fetch } = {}) {
+  logger.info(`Backup <-GET ${baseUrl}/upload`);
+  const response = await fetch(`${baseUrl}/upload`, {
+    signal: AbortSignal.timeout(UPLOAD_TIMEOUT_MS),
+  });
+  if (!response.ok) {
+    let details = '';
+    try {
+      const body = await response.json();
+      details = body.details || body.error || '';
+    } catch {
+      // Not a JSON error body: the status says enough.
+    }
+    throw new Error(`Restore failed (HTTP ${response.status})${details ? `: ${details}` : ''}`);
+  }
+  let size = 0;
+  for await (const chunk of response.body ?? []) {
+    size += chunk.length;
+  }
+  logger.info(`Upload done, ${size} bytes`);
+  return { size_bytes: size };
+}
+/**
+ * The upload operation shared by the manifest action, the scene action and the
+ * widget button: run it, record the outcome, nudge the widget.
+ * @param {import('@gladysassistant/integration-sdk').GladysIntegration} gladys
+ * @param {{ config: object, dataDir?: string, fetch?: typeof fetch, now?: () => Date,
+ *   onRecorded?: () => void }} options
+ */
 
+export async function upload(
+  gladys,
+  { config, dataDir = DATA_DIR, fetch = globalThis.fetch, now = () => new Date(), onRecorded },
+) {
+  const previous = await loadState(dataDir);
+  try {
+    const { size_bytes } = await runUpload(internalBaseUrl(config), { fetch });
+    const state = {
+      last_success_at: now().toISOString(),
+      size_bytes,
+      url: archiveUrl(await publicBaseUrl(gladys, config)),
+      // An external server reads the real Gladys folder: nothing to check.
+      data_missing: config.server_url ? false : await gladysDataMissing(dataDir),
+    };
+    await saveState(state, dataDir);
+    return state;
+  } catch (err) {
+    await saveState(
+      { ...previous, last_error: err.message, last_error_at: now().toISOString() },
+      dataDir,
+    );
+    throw err;
+  } finally {
+    onRecorded?.();
+  }
+}
 /**
  * Whether the last run of save.sh found no Gladys data to archive. Only
  * readable for the sub-container, whose backup.log lives in our volume.
