@@ -58,8 +58,8 @@
     {
       "key": "upload",
       "type": "section",
-      "label": { "en": "Download the backup: curl.exe -F file=@C:\<CHEMIN>\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}", 
-                 "fr": "télécharger une sauvegarde: curl.exe -F file=@C:\<CHEMIN>\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}" },
+      "label": { "en": "Download the backup: curl.exe -F file=@C:\CHEMIN\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}", 
+                 "fr": "télécharger une sauvegarde: curl.exe -F file=@C:\PATH\datas.tar.gz http://{{gladys_host}}:{{port:server_api}}" },
       "description": {
         "en": "the server-api container, reachable at http:/",
         "fr": "pour importer une sauvegarde depuis un terminal avec curl; utiliser la commande ci-dessus"
