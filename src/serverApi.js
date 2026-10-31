@@ -43,6 +43,7 @@ export const DATA_DIR = process.env.DATA_DIR ?? '/data';
 // 120 s acknowledgement delay of the manifest action.
 const BACKUP_TIMEOUT_MS = 110_000;
 const RESTORE_TIMEOUT_MS = 110_000;
+const UPLOAD_TIMEOUT_MS = 110_000;
 const HEALTH_TIMEOUT_MS = 10_000;
 
 const STATE_FILE = 'last-backup.json';
@@ -174,9 +175,9 @@ export async function runBackup(baseUrl, { fetch = globalThis.fetch } = {}) {
  * @returns {Promise<{ size_bytes: number }>}
  */
 export async function runRestore(baseUrl, { fetch = globalThis.fetch } = {}) {
-  logger.info(`Backup <- POST ${baseUrl}/upload`);
-  const response = await fetch(`${baseUrl}/upload`, {
-    signal: AbortSignal.timeout(RESTORE_UPLOAD_TIMEOUT_MS),
+  logger.info(`Backup <-GET ${baseUrl}/restore`);
+  const response = await fetch(`${baseUrl}/restore`, {
+    signal: AbortSignal.timeout(RESTORE_RESTORE_TIMEOUT_MS),
   });
   if (!response.ok) {
     let details = '';
@@ -230,6 +231,13 @@ export async function restore(
   }
 }
 
+/**
+ * Run a upload: `POST upload`, the archive comes back as the response body.
+ * The body is only counted, never kept: the archive stays on the server side.
+ * @param {string} baseUrl
+ * @param {{ fetch?: typeof fetch }} [options]
+ * @returns {Promise<{ size_bytes: number }>}
+ */
 
 /**
  * Whether the last run of save.sh found no Gladys data to archive. Only
